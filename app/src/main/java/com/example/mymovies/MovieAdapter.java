@@ -16,6 +16,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<Movie> movies;
+    private OnPosterClickListener clickListener;
 
     public List<Movie> getMovies() {
         return movies;
@@ -26,14 +27,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         notifyDataSetChanged();
     }
 
+    public void setClickListener(OnPosterClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
     public MovieAdapter() {
         movies = new ArrayList<>();
+    }
+
+    interface OnPosterClickListener {
+        void onPosterClick(int position);
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
         return new MovieViewHolder(view);
     }
 
@@ -50,14 +59,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewSmallPoster;
-
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSmallPoster = itemView.findViewById(R.id.imageViewSmallPoster);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (clickListener !=null){
+                        clickListener.onPosterClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
-
-    public void addMovie(List<Movie> movies) {
+     public void addMovie(List<Movie> movies) {
         this.movies.addAll(movies);
         notifyDataSetChanged();
     }

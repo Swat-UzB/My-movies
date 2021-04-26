@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.mymovies.data.Movie;
@@ -32,10 +33,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         movieAdapter = new MovieAdapter();
         mainBinding.recyclerViewOfFilms.setLayoutManager(new GridLayoutManager(this, 2));
-        JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(NetworkUtils.POPULARITY, 1);
+        mainBinding.recyclerViewOfFilms.setAdapter(movieAdapter);
+        mainBinding.switcher.setChecked(true);
+        mainBinding.switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setMethodOfSort(isChecked);
+            }
+        });
+        mainBinding.switcher.setChecked(false);
+    }
+
+    public void onClickSetPopularity(View view) {
+        setMethodOfSort(false);
+        mainBinding.switcher.setChecked(false);
+        mainBinding.textViewPopularity.setTextColor(getResources().getColor(R.color.purple_700));
+        mainBinding.textViewTopRated.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    public void onClickSetTopRated(View view) {
+        setMethodOfSort(true);
+        mainBinding.switcher.setChecked(true);
+        mainBinding.textViewPopularity.setTextColor(getResources().getColor(R.color.white));
+        mainBinding.textViewTopRated.setTextColor(getResources().getColor(R.color.purple_700));
+    }
+
+    private void setMethodOfSort(boolean isTopRated) {
+        int methodOfSort = NetworkUtils.POPULARITY;
+        if (isTopRated) {
+            methodOfSort = NetworkUtils.TOP_RATED;
+        }
+        JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(methodOfSort, 1);
         List<Movie> movies = JSONUtils.getMoviesFromJSON(jsonObject);
         movieAdapter.setMovies(movies);
-        mainBinding.recyclerViewOfFilms.setAdapter(movieAdapter);
-
     }
 }
