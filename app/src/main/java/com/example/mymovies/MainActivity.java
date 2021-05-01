@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mainBinding.switcher.setChecked(false);
+        movieAdapter.setClickListener(new MovieAdapter.OnPosterClickListener() {
+            @Override
+            public void onPosterClick(int position) {
+                Toast.makeText(MainActivity.this, position+"", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onClickSetPopularity(View view) {

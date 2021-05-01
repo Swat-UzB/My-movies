@@ -68,6 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     if (clickListener !=null){
                         clickListener.onPosterClick(getAdapterPosition());
                     }
+                return false;
                 }
             });
         }
