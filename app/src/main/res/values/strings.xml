@@ -3,4 +3,10 @@
     <string name="poster_film">poster for film</string>
     <string name="top_rated">Top Rated</string>
     <string name="popular">Popular</string>
+    <string name="name">Name</string>
+    <string name="original_name">Original Name</string>
+    <string name="film_photo">Film Photo</string>
+    <string name="release_date">Release date</string>
+    <string name="rating">Rating</string>
+    <string name="overview">Overview</string>
 </resources>

@@ -17,6 +17,7 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<Movie> movies;
     private OnPosterClickListener clickListener;
+    private OnReachEndListener reachEndListener;
 
     public List<Movie> getMovies() {
         return movies;
@@ -25,6 +26,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
+    }
+
+    public void setReachEndListener(OnReachEndListener reachEndListener) {
+        this.reachEndListener = reachEndListener;
     }
 
     public void setClickListener(OnPosterClickListener clickListener) {
@@ -39,6 +44,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         void onPosterClick(int position);
     }
 
+    interface OnReachEndListener {
+        void onReachEnd();
+    }
+
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +57,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+        if (position > movies.size() - 4 && reachEndListener != null) {
+            reachEndListener.onReachEnd();
+        }
         Movie movie = movies.get(position);
         Picasso.get().load(movie.getPosterPath()).into(holder.imageViewSmallPoster);
     }
@@ -59,21 +71,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewSmallPoster;
+
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSmallPoster = itemView.findViewById(R.id.imageViewSmallPoster);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    if (clickListener !=null){
+                public void onClick(View v) {
+                    if (clickListener != null) {
                         clickListener.onPosterClick(getAdapterPosition());
                     }
-                return false;
                 }
             });
         }
     }
-     public void addMovie(List<Movie> movies) {
+
+    public void addMovie(List<Movie> movies) {
         this.movies.addAll(movies);
         notifyDataSetChanged();
     }
