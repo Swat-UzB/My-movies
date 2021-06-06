@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         View view = mainBinding.getRoot();
         setContentView(view);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-//        viewModel = new ViewModelProvider(this, ViewModelProvider
-//                .AndroidViewModelFactory
-//                .getInstance(getApplication()))
-//                .get(MainViewModel.class);
         movieAdapter = new MovieAdapter();
         mainBinding.recyclerViewOfFilms.setLayoutManager(new GridLayoutManager(this, 2));
         mainBinding.recyclerViewOfFilms.setAdapter(movieAdapter);

@@ -34,7 +34,7 @@
             android:paddingLeft="10dp"
             android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFavourite" />
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFavourite" />
 
         <TextView
             android:id="@+id/textViewOriginalTitleLabel"
@@ -117,5 +117,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLabelOverview" />
+
+        <ImageView
+            android:id="@+id/imageViewFavourite"
+            android:layout_width="@dimen/size_of_star"
+            android:layout_height="@dimen/size_of_star"
+            android:layout_marginEnd="@dimen/size_of_star"
+            android:layout_marginRight="@dimen/size_of_star"
+           android:onClick="onClickChangeFavourite"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/favourite_icon"
+            android:contentDescription="@string/favourite" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
